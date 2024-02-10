@@ -1,6 +1,12 @@
 #import "Basic";
 #import "Compiler";
 #import "File";
+#import "File_Utilities";
+#import "String";
+
+JAI_PATH := "D:/Jai";
+JAI_SDL2_PATH := "/modules/SDL/win/";
+SDL2_DLL := "SDL2.dll";
 
 #run {
   // No output of build script
@@ -28,6 +34,11 @@
   // Compiler loop
   compiler_begin_intercept(workspace);
   add_build_file("src/main.jai", workspace);
+
+  // Copy SDL2.dll to the build directory
+  sdl2_dll_path := join(JAI_PATH, JAI_SDL2_PATH, SDL2_DLL);
+  abs_working_directory := join(get_working_directory(), "/", build_output_directory);
+  copy_file(sdl2_dll_path, abs_working_directory);
 
   while true {
     message := compiler_wait_for_message();
