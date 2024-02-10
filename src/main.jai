@@ -7,6 +7,7 @@
 WINDOW_WIDTH := 640;
 WINDOW_HEIGHT := 480;
 WINDOW : *SDL_Window = null;
+ENGINE_RUNNING := true;
 
 main :: () {
   // Initial message
@@ -42,5 +43,31 @@ main :: () {
   print("GL Vendor = %\n", to_string(glGetString(GL_VENDOR)));
   print("GL Version = %\n", to_string(glGetString(GL_VERSION)));
 
+  while ENGINE_RUNNING {
+    event : SDL_Event;
+    
+    // Event polling
+    while SDL_PollEvent(*event) {
+      if event.type == {
+        case SDL_QUIT;
+          ENGINE_RUNNING = false;
+        case SDL_KEYUP;
+          if event.key.keysym.sym == SDLK_ESCAPE ENGINE_RUNNING = false;
+        case SDL_WINDOWEVENT;
+          if event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED {
+            WINDOW_WIDTH = event.window.data1;
+            WINDOW_HEIGHT = event.window.data2;
+            // glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+          }
+      }
+    }
+    // Simulation
+
+    // Rendering
+    glViewport(0, 0, xx WINDOW_WIDTH, xx WINDOW_HEIGHT);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    SDL_GL_SwapWindow(WINDOW);
+  }
 }
 

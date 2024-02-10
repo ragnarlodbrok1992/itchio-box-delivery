@@ -37,7 +37,9 @@ SDL2_DLL := "SDL2.dll";
 
   // Copy SDL2.dll to the build directory
   sdl2_dll_path := join(JAI_PATH, JAI_SDL2_PATH, SDL2_DLL);
-  abs_working_directory := join(get_working_directory(), "/", build_output_directory);
+  abs_working_directory := join(get_working_directory(), "/", build_output_directory, SDL2_DLL);
+  abs_working_directory  = replace(abs_working_directory, "\\", "/");
+
   copy_file(sdl2_dll_path, abs_working_directory);
 
   while true {
