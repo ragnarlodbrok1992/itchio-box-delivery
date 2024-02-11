@@ -18,6 +18,9 @@ WINDOW : *SDL_Window = null;
 
 ENGINE_START_TIME : Apollo_Time;
 
+// Configuration
+DEBUG :: true;
+
 main :: () {
   // Initial message
   print("Hello ItchIO! This is Box Delivery game\n");
@@ -54,6 +57,8 @@ main :: () {
 
   // Loading shaders
   shader_program := Shaders.load_shaders(DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER);
+
+  if DEBUG print("[DEBUG]: Shader program = %\n", shader_program);
 
   // Time stuff
   delta_time := 0.01667; // Assuming 60 FPS
